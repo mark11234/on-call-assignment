@@ -8,18 +8,23 @@ type RotaItem = {
   firstOn: Doctor;
   secondOn: Doctor;
 };
-type RotaError = "BAD_DATE_RANGE" | "INSUFFICIENT_ON_CALL_PROVIDED";
+type RotaError =
+  | "BAD_DATE_RANGE"
+  | "INSUFFICIENT_ON_CALL_PROVIDED"
+  | "REQUEST_TIMED_OUT";
+
+type RotaOutput = { status: RotaError } | { status: "OK"; rota: RotaItem[] };
 
 export const getNewRota = (
   inputDoctors: Doctor[],
   startDate: Date,
   endDate: Date,
-): RotaItem[] | RotaError => {
+): RotaOutput => {
   const doctors = Array.from(inputDoctors).map((doctor) => ({
     ...doctor,
     holidays: _.uniq(doctor.holidays.map((date) => getPreviousMonday(date))),
   }));
-  if (startDate >= endDate) return "BAD_DATE_RANGE";
+  if (startDate >= endDate) return { status: "BAD_DATE_RANGE" };
 
   const mondays: Date[] = getListOfMondays(startDate, endDate);
 
@@ -35,7 +40,7 @@ export const getNewRota = (
       0,
     ) < mondays.length
   ) {
-    return "INSUFFICIENT_ON_CALL_PROVIDED";
+    return { status: "INSUFFICIENT_ON_CALL_PROVIDED" };
   }
   for (let i = 0; i <= 1000; i++) {
     let badRota = false;
@@ -113,14 +118,12 @@ export const getNewRota = (
     } catch (err) {
       if (err !== BreakError) throw err;
     }
-    if (!badRota) return rotaAttempt;
+    // TODO: Work out why rotaAttempt sometimes too short
+    if (!badRota && rotaAttempt.length === mondays.length)
+      return { status: "OK", rota: rotaAttempt };
   }
 
-  return mondays.map((date) => ({
-    date: date,
-    firstOn: doctors[0],
-    secondOn: doctors[1],
-  }));
+  return { status: "REQUEST_TIMED_OUT" };
 };
 
 const getPreviousMonday = (date: Date): Date => {
