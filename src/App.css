@@ -12,3 +12,37 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.row  {
+  display: flex;
+  flex-direction: row;
+  color: black;
+}
+
+.longCell .midCell .shortCell{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vw;
+}
+
+.longCell {
+  background-color: darkgray;
+  width: 16vw;
+  margin: 1px;
+  padding: 4px;
+}
+
+.shortCell {
+  background-color: darkgray;
+  width: 8vw;
+  margin: 1px;
+  padding: 4px;
+}
+
+.midCell {
+  background-color: darkgray;
+  width: 12vw;
+  margin: 1px;
+  padding: 4px;
+}

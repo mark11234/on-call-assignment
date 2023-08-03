@@ -1,5 +1,5 @@
 import { Doctor } from "../models/doctor";
-import "./doctorInput.css";
+import "../App.css";
 import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
 import HolidayCell from "./holidayCell";
 
