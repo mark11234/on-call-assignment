@@ -1,19 +1,9 @@
 import { Doctor } from "../models/doctor";
 import * as _ from "lodash";
+import { RotaItem, RotaOutput } from "../models/rotaOutput";
 
 const MILLISECONDS_IN_WEEK = 604800000;
 const BreakError = {};
-type RotaItem = {
-  date: Date;
-  firstOn: Doctor;
-  secondOn: Doctor;
-};
-type RotaError =
-  | "BAD_DATE_RANGE"
-  | "INSUFFICIENT_ON_CALL_PROVIDED"
-  | "REQUEST_TIMED_OUT";
-
-type RotaOutput = { status: RotaError } | { status: "OK"; rota: RotaItem[] };
 
 export const getNewRota = (
   inputDoctors: Doctor[],
@@ -127,8 +117,8 @@ export const getNewRota = (
 };
 
 const getPreviousMonday = (date: Date): Date => {
-  const previousMonday = new Date(date.toUTCString());
-  previousMonday.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7));
+  const previousMonday = new Date(date.toString());
+  previousMonday.setDate(date.getDate() - ((date.getDay() + 6) % 7));
   return previousMonday;
 };
 

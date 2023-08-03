@@ -2,7 +2,7 @@ import { Doctor } from "../models/doctor";
 
 export const doctors: Doctor[] = [
   {
-    name: "Russ",
+    name: "Robers",
     numberOfFirsts: 7,
     numberOfSeconds: 7,
     allowConsecutives: true,
@@ -14,14 +14,6 @@ export const doctors: Doctor[] = [
     numberOfFirsts: 7,
     numberOfSeconds: 7,
     allowConsecutives: false,
-    allowAfterHoliday: false,
-    holidays: [],
-  },
-  {
-    name: "Habib",
-    numberOfFirsts: 8,
-    numberOfSeconds: 8,
-    allowConsecutives: true,
     allowAfterHoliday: false,
     holidays: [],
   },
@@ -50,7 +42,7 @@ export const doctors: Doctor[] = [
     holidays: [],
   },
   {
-    name: "Ramla",
+    name: "Stovesy",
     numberOfFirsts: 8,
     numberOfSeconds: 8,
     allowConsecutives: true,

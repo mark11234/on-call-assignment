@@ -1,0 +1,15 @@
+.row  {
+    display: flex;
+    flex-direction: row;
+    color: black;
+}
+
+.cell {
+    background-color: darkgray;
+    text-align: center;
+    width: 12vw;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vw;
+    margin: 1px;
+}

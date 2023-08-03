@@ -1,31 +1,57 @@
 import "./App.css";
 import { getNewRota } from "./helpers/getNewRota";
-import { doctors } from "./data/initialDoctors";
-
-// TODO: Replace this with useState() hooks
-const startDate = new Date();
-startDate.setUTCHours(0, 0, 0, 0);
-const endDate = new Date();
-endDate.setUTCDate(endDate.getDay() + 365);
-endDate.setUTCHours(0, 0, 0, 0);
-const rotaOutput = getNewRota(doctors, startDate, endDate);
+import { doctors as initialDoctors } from "./data/initialDoctors";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { RotaOutput } from "./models/rotaOutput";
+import { Doctor } from "./models/doctor";
+import DoctorInputTable from "./component/doctorInputTable";
 
 const App = () => {
+  const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const rotaOutput: RotaOutput =
+    startDate && endDate
+      ? getNewRota(doctors, startDate, endDate)
+      : { status: "BAD_DATE_RANGE" };
   return (
     <div className="wrapper">
       <header className="header">
-        <p>
-          Start Date: {startDate.toUTCString()} <br></br>
-          End Date: {endDate.toUTCString()} <br></br>
-        </p>
+        Start date:{" "}
+        <DatePicker
+          wrapperClassName="datePicker"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+        />
+        {startDate?.toLocaleDateString()}
+        End date:{" "}
+        <DatePicker
+          wrapperClassName="datePicker"
+          selected={endDate}
+          onChange={(date) => setEndDate(date)}
+        />
+        <DoctorInputTable doctors={doctors} setDoctors={setDoctors} />
         {rotaOutput.status !== "OK" && rotaOutput.status}
         {rotaOutput.status === "OK" &&
           rotaOutput.rota.map((item, index) => (
             <p key={index}>
-              {item.date.toUTCString()} {item.firstOn.name} {item.secondOn.name}
+              {item.date.toLocaleDateString()} {item.firstOn.name}{" "}
+              {item.secondOn.name}
             </p>
           ))}
       </header>
+      {/* Remove this bit: */}
+      <p>
+        {doctors.map((doctor) => (
+          <p>
+            {doctor.name} {doctor.numberOfFirsts} {doctor.numberOfSeconds}
+            {doctor.allowAfterHoliday.toString()}
+            {doctor.allowConsecutives.toString()}
+          </p>
+        ))}
+      </p>
     </div>
   );
 };
