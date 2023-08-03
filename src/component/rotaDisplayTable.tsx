@@ -14,43 +14,41 @@ const RotaDisplayTable: React.FC<RotaDisplayTableProps> = ({
   return (
     <>
       <div className="row">
-        <div className="midCell">Week Beginning</div>
+        <div className="accentMidCell">Week Beginning</div>
         {doctors.map((doctor) => (
-          <div className="midCell">{doctor.name}</div>
+          <div className="accentShortCell">{doctor.name}</div>
         ))}
       </div>
       {rota.map((rotaItem, index) => (
         <div className="row">
           <div className="midCell">{rotaItem.date.toLocaleDateString()}</div>
           {doctors.map((doctor) => (
-            <div className="midCell">
-              {rotaItem.firstOn.name === doctor.name ? 1 : ""}
-              {rotaItem.secondOn.name === doctor.name ? 2 : ""}
+            <div className="shortCell">
+              {rotaItem.firstOn.key === doctor.key ? 1 : ""}
+              {rotaItem.secondOn.key === doctor.key ? 2 : ""}
             </div>
           ))}
         </div>
       ))}
       <div className="row">
-        <div className="midCell">Number of 1s</div>
+        <div className="accentMidCell">Total 1s</div>
         {doctors.map((doctor) => (
-          <div className="midCell">
+          <div className="accentShortCell">
             {rota.reduce(
               (accumulator, currentItem) =>
-                accumulator +
-                (currentItem.firstOn.name === doctor.name ? 1 : 0),
+                accumulator + (currentItem.firstOn.key === doctor.key ? 1 : 0),
               0,
             )}
           </div>
         ))}
       </div>
       <div className="row">
-        <div className="midCell">Number of 2s</div>
+        <div className="accentMidCell">Total 2s</div>
         {doctors.map((doctor) => (
-          <div className="midCell">
+          <div className="accentShortCell">
             {rota.reduce(
               (accumulator, currentItem) =>
-                accumulator +
-                (currentItem.secondOn.name === doctor.name ? 1 : 0),
+                accumulator + (currentItem.secondOn.key === doctor.key ? 1 : 0),
               0,
             )}
           </div>

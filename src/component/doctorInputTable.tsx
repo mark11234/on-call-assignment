@@ -1,6 +1,6 @@
 import { Doctor } from "../models/doctor";
 import "../App.css";
-import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
+import { Button, Checkbox, MenuItem, Select, TextField } from "@mui/material";
 import HolidayCell from "./holidayCell";
 
 type DoctorInputTableProps = {
@@ -26,16 +26,25 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
   return (
     <>
       <div className="row">
-        <div className="midCell">Name</div>
-        <div className="shortCell">Number of Firsts</div>
-        <div className="shortCell">Number of Seconds</div>
-        <div className="shortCell">After Holiday?</div>
-        <div className="shortCell">Allow 1s then 2s?</div>
-        <div className="longCell">Holidays</div>
+        <div className="accentShortCell">Name</div>
+        <div className="accentShortCell">Number of Firsts</div>
+        <div className="accentShortCell">Number of Seconds</div>
+        <div className="accentShortCell">After Holiday?</div>
+        <div className="accentShortCell">Allow 1s then 2s?</div>
+        <div className="accentLongCell">Holidays</div>
+        <div className="buttonHiddenCell">
+          <Button
+            className="button"
+            variant="contained"
+            onClick={() => setDoctors([])}
+          >
+            Remove All
+          </Button>
+        </div>
       </div>
       {doctors.map((doctor, index) => (
         <div className="row">
-          <div className="midCell">
+          <div className="shortCell">
             <TextField
               variant="standard"
               value={doctor.name}
@@ -132,6 +141,21 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
                 updateDoctorIndex({ ...doctor, holidays: holidays }, index)
               }
             ></HolidayCell>
+          </div>
+          <div className="buttonHiddenCell">
+            <Button
+              className="button"
+              variant="contained"
+              onClick={() =>
+                setDoctors(
+                  doctors.filter(
+                    (doctorToFilter) => doctorToFilter.key !== doctor.key,
+                  ),
+                )
+              }
+            >
+              Remove
+            </Button>
           </div>
         </div>
       ))}

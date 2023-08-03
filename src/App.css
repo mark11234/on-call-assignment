@@ -1,48 +1,78 @@
+:root {
+  --baseColor: #FFFBFA;
+  --mainTextColor: #000000;
+  --primaryColor: #49C6E5;
+  --primaryTextColor: #202A25;
+  --secondaryColor: #006D77;
+  --secondaryTextColor: #FFFBFA;
+  --highlightColor: #00BD9D;
+}
+
 .wrapper {
   text-align: center;
 }
 
 .header {
-  background-color: #282c34;
+  background-color: var(--baseColor);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--mainTextColor);
 }
 
-.row  {
+.row {
   display: flex;
   flex-direction: row;
-  color: black;
+  color: var(--primaryTextColor);
 }
 
-.longCell .midCell .shortCell{
+.longCell,
+.shortCell,
+.midCell,
+.buttonHiddenCell,
+.accentLongCell,
+.accentShortCell,
+.accentMidCell {
+  margin: 1px;
+  padding: 4px;
   text-align: center;
   align-items: center;
   justify-content: center;
   font-size: 2vw;
 }
 
-.longCell {
-  background-color: darkgray;
-  width: 16vw;
-  margin: 1px;
-  padding: 4px;
-}
-
-.shortCell {
-  background-color: darkgray;
-  width: 8vw;
-  margin: 1px;
-  padding: 4px;
-}
-
+.longCell,
+.shortCell,
 .midCell {
-  background-color: darkgray;
+  background-color: var(--primaryColor);
+}
+
+.accentLongCell,
+.accentShortCell,
+.accentMidCell {
+  background-color: var(--secondaryColor);
+}
+
+.longCell,
+.accentLongCell {
+  width: 16vw;
+}
+
+.shortCell,
+.accentShortCell {
+  width: 8vw;
+}
+
+.midCell,
+.accentMidCell,
+.buttonHiddenCell {
   width: 12vw;
-  margin: 1px;
-  padding: 4px;
+}
+
+.button {
+  background-color: var(--highlightColor) !important;
+  color: var(--mainTextColor) !important;
 }

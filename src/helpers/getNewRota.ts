@@ -46,7 +46,7 @@ export const getNewRota = (
           )
           .filter(
             (doctor) =>
-              rotaAttempt.filter((item) => item.firstOn.name === doctor.name)
+              rotaAttempt.filter((item) => item.firstOn.key === doctor.key)
                 .length < doctor.numberOfFirsts,
           );
 
@@ -59,7 +59,7 @@ export const getNewRota = (
           )
           .filter(
             (doctor) =>
-              rotaAttempt.filter((item) => item.secondOn.name === doctor.name)
+              rotaAttempt.filter((item) => item.secondOn.key === doctor.key)
                 .length < doctor.numberOfSeconds,
           );
 
@@ -164,7 +164,7 @@ const validAdditionToRota = (
 const getListOfMondays = (startDate: Date, endDate: Date): Date[] => {
   const startMonday = getPreviousMonday(startDate);
   const mondays: Date[] = [];
-  let numberOfWeeks = 1;
+  let numberOfWeeks = 0;
   while (startMonday <= endDate) {
     const dateToAdd = new Date(
       startMonday.valueOf() + numberOfWeeks * MILLISECONDS_IN_WEEK,

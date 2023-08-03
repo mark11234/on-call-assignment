@@ -1,4 +1,5 @@
 export type Doctor = {
+  key: number;
   name: string;
   numberOfFirsts: number;
   numberOfSeconds: number;

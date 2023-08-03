@@ -1,7 +1,7 @@
 import "./App.css";
 import { getNewRota } from "./helpers/getNewRota";
 import { doctors as initialDoctors } from "./data/initialDoctors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { RotaOutput } from "./models/rotaOutput";
@@ -15,6 +15,7 @@ const App = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [rotaOutput, setRotaOutput] = useState<RotaOutput | null>(null);
+  useEffect(() => setRotaOutput(null), [doctors, startDate, endDate]);
   return (
     <div className="wrapper">
       <header className="header">
@@ -31,8 +32,33 @@ const App = () => {
           onChange={(date) => setEndDate(date)}
         />
         <DoctorInputTable doctors={doctors} setDoctors={setDoctors} />
+        <Button
+          className="button"
+          variant="contained"
+          onClick={() =>
+            setDoctors([
+              ...doctors,
+              {
+                key: doctors.reduce(
+                  (maxValue, currentDoctor) =>
+                    Math.max(maxValue, currentDoctor.key) + 1,
+                  -1,
+                ),
+                name: "",
+                numberOfFirsts: 0,
+                numberOfSeconds: 0,
+                allowAfterHoliday: false,
+                allowConsecutives: false,
+                holidays: [],
+              },
+            ])
+          }
+        >
+          Add Doctor
+        </Button>
         {startDate && endDate && (
           <Button
+            className="button"
             variant="contained"
             onClick={() =>
               setRotaOutput(getNewRota(doctors, startDate, endDate))

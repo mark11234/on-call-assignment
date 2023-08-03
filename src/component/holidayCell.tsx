@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import "../App.css";
 
 type HolidayCellProps = {
   holidays: Date[];
@@ -40,6 +41,7 @@ const HolidayCell: React.FC<HolidayCellProps> = (props) => {
             }
           />
           <Button
+            className="button"
             variant="contained"
             onClick={() =>
               setHolidays(
@@ -52,6 +54,7 @@ const HolidayCell: React.FC<HolidayCellProps> = (props) => {
         </div>
       ))}
       <Button
+        className="button"
         variant="contained"
         onClick={() => setHolidays([...holidays, null])}
       >
