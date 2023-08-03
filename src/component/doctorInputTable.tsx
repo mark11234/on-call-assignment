@@ -1,6 +1,7 @@
 import { Doctor } from "../models/doctor";
 import "./doctorInput.css";
 import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
+import HolidayCell from "./holidayCell";
 
 type DoctorInputTableProps = {
   doctors: Doctor[];
@@ -11,7 +12,6 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
   doctors,
   setDoctors,
 }) => {
-  //   const [doctors, setDoctors] = useState<Doctor[]>(initialDoctors);
   const updateDoctorIndex = (
     doctorValueToUpdate: Doctor,
     doctorToDisplayIndex: number,
@@ -26,16 +26,16 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
   return (
     <>
       <div className="row">
-        <div className="cell">Name</div>
-        <div className="cell">Number of Firsts</div>
-        <div className="cell">Number of Seconds</div>
-        <div className="cell">After Holiday?</div>
-        <div className="cell">Allow 1s then 2s?</div>
-        <div className="cell">Holidays</div>
+        <div className="midCell">Name</div>
+        <div className="shortCell">Number of Firsts</div>
+        <div className="shortCell">Number of Seconds</div>
+        <div className="shortCell">After Holiday?</div>
+        <div className="shortCell">Allow 1s then 2s?</div>
+        <div className="longCell">Holidays</div>
       </div>
       {doctors.map((doctor, index) => (
         <div className="row">
-          <div className="cell">
+          <div className="midCell">
             <TextField
               variant="standard"
               value={doctor.name}
@@ -44,7 +44,7 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
               }
             ></TextField>
           </div>
-          <div className="cell">
+          <div className="shortCell">
             <Select
               value={doctor.numberOfFirsts}
               onChange={(e) =>
@@ -74,7 +74,7 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
             </Select>
           </div>
 
-          <div className="cell">
+          <div className="shortCell">
             <Select
               value={doctor.numberOfSeconds}
               onChange={(e) =>
@@ -103,7 +103,7 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
               <MenuItem value={10}>10</MenuItem>
             </Select>
           </div>
-          <div className="cell">
+          <div className="shortCell">
             <Checkbox
               checked={doctor.allowAfterHoliday}
               onChange={(e) =>
@@ -114,7 +114,7 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
               }
             />
           </div>
-          <div className="cell">
+          <div className="shortCell">
             <Checkbox
               checked={doctor.allowConsecutives}
               onChange={(e) =>
@@ -125,8 +125,13 @@ const DoctorInputTable: React.FC<DoctorInputTableProps> = ({
               }
             />
           </div>
-          <div className="cell">
-            <p>{doctor.holidays.toString()}</p>
+          <div className="longCell">
+            <HolidayCell
+              holidays={doctor.holidays}
+              updateHolidays={(holidays) =>
+                updateDoctorIndex({ ...doctor, holidays: holidays }, index)
+              }
+            ></HolidayCell>
           </div>
         </div>
       ))}

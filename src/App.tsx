@@ -42,16 +42,6 @@ const App = () => {
             </p>
           ))}
       </header>
-      {/* Remove this bit: */}
-      <p>
-        {doctors.map((doctor) => (
-          <p>
-            {doctor.name} {doctor.numberOfFirsts} {doctor.numberOfSeconds}
-            {doctor.allowAfterHoliday.toString()}
-            {doctor.allowConsecutives.toString()}
-          </p>
-        ))}
-      </p>
     </div>
   );
 };
